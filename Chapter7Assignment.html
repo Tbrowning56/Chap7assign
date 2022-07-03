@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--Name: Tyler Browning
+        FileName: Chapter 7 Assignment
+        Class section: Web115.0002
+        -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale1.0">
+        <title>Chapter 7 Assignment</title>
+    </head>
+    <script type="text/javascript">
+        // declaring variables used in stopwatch and a main function with all the timer functions embedded within.
+        window.onload = () => {
+            let hour = 0;
+            let minute = 0;
+            let seconds = 0;
+            let totalsecs = 0;
+            let interValID = null;
+            
+            // creating the start function and the math for calculating the seconds, minutes and hours.
+            // using getElementbyId and the innerHTML property to constatly update the timer.
+            function startTime() {
+                ++totalsecs;
+                hour = Math.floor(totalsecs/3600);
+                minute =  Math.floor((totalsecs - hour*3600)/60);
+                seconds = totalsecs - (hour * 3600 + minute * 60);
+                document.getElementById("hour").innerHTML =  hour;
+                document.getElementById("minute").innerHTML = minute;
+                document.getElementById("seconds").innerHTML = seconds;
+            }
+
+            // creating the stop function, if the variable intervalID is not null, stop the timer.
+            function stopTime(){
+                if (interValID)
+                    clearInterval(interValID); 
+            }
+
+            // creating the reset function, resets the total seconds variable to 0 and uses getElementbyID and the innerHTML property to update the timer to all 0's. 
+            function resetTime(){
+                totalsecs = 0;
+                document.getElementById("hour").innerHTML = '0';
+                document.getElementById("minute").innerHTML = '0';
+                document.getElementById('seconds').innerHTML = '0';
+            }
+
+            // using getElementByID and an event listener to begin the start time, I created a function within the event listener that updates interValID to not null 
+            // and starts the timer, incrementing by 1000ms or 1 second.
+            // 
+            document.getElementById("startTimer").addEventListener('click', function start(){
+                interValID = setInterval(startTime, 1000);
+            });
+
+            // in this event listener and the resetTimer event listener, It waits for the click on either button, and when pressed it activates the function.
+            document.getElementById("stopTimer").addEventListener('click', stopTime);
+            document.getElementById('resetTimer').addEventListener('click', resetTime);
+        }
+    </script>
+    <body>
+        <p>Hour: <span id="hour"></span></p>
+
+        <p>Minute: <span id="minute"></span></p>
+
+        <p>Second: <span id="seconds"></span></p>
+
+        <input type = "button" id ="startTimer" value="Start Timer"><br>
+
+        <input type="button" id="stopTimer" value="Stop Timer"><br>
+
+        <input type="button" id="resetTimer" value="Reset Timer"><br>
+
+    </body>
+</html>
